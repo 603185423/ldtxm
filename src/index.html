@@ -7,27 +7,87 @@
     <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/qrcode.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(e) {
+        var qrcode;
+        $(document).ready(function (e) {
             changeQRCode();
+            refreshTime2();
         });
-        function changeQRCode () {
-            //do sth
-            qrcode.makeCode('https://qywx.cjlu.edu.cn/WebServices/XSQJTXM.ashx?guid=我是学号&zt=7&ts=' + (Date.parse(new Date())/1000).toString());
-            setTimeout(changeQRCode,1000);
+
+        function changeQRCode() {
+            if (document.getElementsByTagName("img").length) {
+                document.getElementsByTagName("img")[0].remove();
+
+            }
+            qrcode = new QRCode(document.getElementById("tongXingMa"), {
+                height: document.getElementById("tongXingMa").offsetHeight,
+                width: document.getElementById("tongXingMa").offsetWidth,
+                colorDark: "#4e9553",
+                correctLevel: QRCode.CorrectLevel.L,
+            });
+            qrcode.makeCode('https://qywx.cjlu.edu.cn/WebServices/XSQJTXM.ashx?guid=我是学号&zt=7&ts=' + (Date.parse(new Date()) / 1000).toString());
+            setTimeout(changeQRCode, 3000);
+        }
+        function refreshTime2(){
+            var date = new Date();
+            document.getElementById("time2").textContent=date.getHours().toString()+':'+date.getMinutes().toString()+':'+date.getSeconds().toString();
+            setTimeout(refreshTime2, 1000);
         }
     </script>
 </head>
 <body>
-<div id=tongXingMa>
+<div id="cjlu">
+中国计量大学
 </div>
+<div id="infomationPad">
+    <div class="persionalInformation">姓名：姓名</div>
+    <div class="persionalInformation">学院：信息工程系</div>
+    <div class="persionalInformation">班级：电信191</div>
+    <div id="empty1"></div>
+    <div id="time1" class="time">1月11日</div>
+    <div id="time2" class="time">14:14:14</div>
+    <div id="jb">
+        <div id=tongXingMa></div>
+    </div>
+    <div id="yiMiao">已完成新冠疫苗接种</div>
+    <div id="keTongXing">可凭此码通行</div>
+    <div id="liHang" class="button-shenPi">离杭审批</div>
+    <div id="fanHang" class="button-shenPi">返杭审批</div>
+
+</div>
+
 <script type="text/javascript">
-    var qrcode = new QRCode(document.getElementById("tongXingMa"),{
-        height: document.getElementById("tongXingMa").offsetHeight,
-        width: document.getElementById("tongXingMa").offsetWidth,
-        colorDark: "#4e9553",
-        correctLevel : QRCode.CorrectLevel.L,
+    HTMLElement.prototype.__defineGetter__("currentStyle", function () {
+        return this.ownerDocument.defaultView.getComputedStyle(this, null);
     });
-    qrcode.makeCode('https://qywx.cjlu.edu.cn/WebServices/XSQJTXM.ashx?guid=我是学号&zt=7&ts=' + (Date.parse(new Date())/1000).toString());
+    document.getElementById("liHang").onclick = function (){
+        if (document.getElementById("liHang").currentStyle.backgroundColor==="rgb(127, 127, 127)"){
+            document.getElementById("liHang").style.backgroundColor="#3d87d0";
+        }
+        else {
+            document.getElementById("liHang").style.backgroundColor="#7f7f7f";
+        }
+    };
+    document.getElementById("fanHang").onclick = function (){
+        if (document.getElementById("fanHang").currentStyle.backgroundColor==="rgb(127, 127, 127)"){
+            document.getElementById("fanHang").style.backgroundColor="#3d87d0";
+        }
+        else {
+            document.getElementById("fanHang").style.backgroundColor="#7f7f7f";
+        }
+    };
+    document.getElementById("yiMiao").onclick = function (){
+        if (document.getElementById("yiMiao").currentStyle.color==="rgb(226, 150, 46)"){
+            document.getElementById("yiMiao").style.color="#fefefe";
+            document.getElementById("jb").style.backgroundColor="#fefefe";
+        }
+        else {
+            document.getElementById("yiMiao").style.color="#e2962e";
+            document.getElementById("jb").style.backgroundColor="#e2962e";
+        }
+    };
+    var date = new Date();
+    document.getElementById("time1").textContent=(date.getMonth()+1).toString()+'月'+date.getDay().toString()+'日';
 </script>
+
 </body>
 </html>
