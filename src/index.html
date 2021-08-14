@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/qrcode.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            changeQRCode();
+        });
+        function changeQRCode () {
+            //do sth
+            qrcode.makeCode('https://qywx.cjlu.edu.cn/WebServices/XSQJTXM.ashx?guid=我是学号&zt=7&ts=' + (Date.parse(new Date())/1000).toString());
+            setTimeout(changeQRCode,1000);
+        }
+    </script>
+</head>
+<body>
+<div id=tongXingMa>
+</div>
+<script type="text/javascript">
+    var qrcode = new QRCode(document.getElementById("tongXingMa"),{
+        height: document.getElementById("tongXingMa").offsetHeight,
+        width: document.getElementById("tongXingMa").offsetWidth,
+        colorDark: "#4e9553",
+        correctLevel : QRCode.CorrectLevel.L,
+    });
+    qrcode.makeCode('https://qywx.cjlu.edu.cn/WebServices/XSQJTXM.ashx?guid=我是学号&zt=7&ts=' + (Date.parse(new Date())/1000).toString());
+</script>
+</body>
+</html>
